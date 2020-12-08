@@ -146,7 +146,7 @@ public class CommonHandler {
         if (victim instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) victim;
 
-            if (!source.isFireDamage() && !source.isDamageAbsolute()) {
+            if (!source.isFireDamage() && !source.isDamageAbsolute() && !(source.damageType == "outOfWorld" && !GokiConfig.SERVER.canRollOnVoidDamage.get()))
                 if (player.getEntityWorld().rand.nextFloat() >= 1.0f - Stats.ROLL.getBonus(player)) {
                     // Avoid damage
                     event.setCanceled(true);

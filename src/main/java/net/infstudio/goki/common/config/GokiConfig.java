@@ -25,6 +25,7 @@ public class GokiConfig {
         public final ForgeConfigSpec.IntValue globalMaxRevertLevel;
         public final ForgeConfigSpec.DoubleValue globalRevertFactor;
         public final ForgeConfigSpec.IntValue reaperLimit;
+        public final ForgeConfigSpec.BooleanValue canRollOnVoidDamage;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.comment("Server configuration settings")
@@ -49,6 +50,8 @@ public class GokiConfig {
 
             reaperLimit = builder.comment("When using reaper skill, the maximum health of target hostile. -1 for no limit.")
                     .defineInRange("reaperLimit", 20, -1, Integer.MAX_VALUE);
+            canRollOnVoidDamage = builder.comment("Can rolls activate on receiving void damage (ex: /kill)")
+                    .define("canRollOnVoidDamage", false);
         }
     }
 }
