@@ -11,13 +11,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameter;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -38,7 +36,7 @@ public class GokiLootModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if (!context.has(LootParameters.BLOCK_STATE) || !context.has(LootParameters.THIS_ENTITY) || !context.has(LootParameters.field_237457_g_)) return generatedLoot;
+        if (!context.has(LootParameters.BLOCK_STATE) || !context.has(LootParameters.THIS_ENTITY) || !context.has(LootParameters.POSITION)) return generatedLoot;
         Entity entity = context.get(LootParameters.THIS_ENTITY);
         if (!(entity instanceof PlayerEntity)) {
             return generatedLoot;
@@ -68,7 +66,7 @@ public class GokiLootModifier extends LootModifier {
                 }
             }
             if (treasureFound) {
-                player.world.playSound(player, new BlockPos(context.get(LootParameters.field_237457_g_)), GokiSounds.TREASURE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                player.world.playSound(player, context.get(LootParameters.POSITION), GokiSounds.TREASURE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
 
@@ -104,7 +102,7 @@ public class GokiLootModifier extends LootModifier {
                     }
                 }
                 if (magicHappened) {
-                    player.world.playSound(player, new BlockPos(context.get(LootParameters.field_237457_g_)), GokiSounds.MAGICIAN, SoundCategory.BLOCKS, 0.3f, 1.0f);
+                    player.world.playSound(player, context.get(LootParameters.POSITION), GokiSounds.MAGICIAN, SoundCategory.BLOCKS, 0.3f, 1.0f);
                 }
             }
         }
@@ -116,11 +114,6 @@ public class GokiLootModifier extends LootModifier {
         @Override
         public GokiLootModifier read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
             return new GokiLootModifier(conditionsIn);
-        }
-
-        @Override
-        public JsonObject write(GokiLootModifier instance) {
-            return new JsonObject();
         }
     }
 }

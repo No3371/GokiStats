@@ -13,10 +13,6 @@ Feel free to solve any issue with crash-report in GitHub Issues.
 
 Forum thread on [Mcbbs](http://www.mcbbs.net/thread-805910-1-1.html)
 
-## 1.16.3 Version
-
-Mining Magician and Treasure Finder skill are re-enabled and work as fine.
-
 ## Why Furnace Finesse is disabled?
 
 Because it drops TPS heavily. I will working on a better implementation.

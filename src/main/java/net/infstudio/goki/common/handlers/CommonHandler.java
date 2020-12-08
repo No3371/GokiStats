@@ -22,9 +22,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -130,6 +127,17 @@ public class CommonHandler {
     }
 
     @SubscribeEvent
+    public static void entityKnockback(LivingKnockBackEvent event) {
+        if (event.getOriginalAttacker() == null && event.getAttacker() == null) return;
+        Entity attacker = event.getOriginalAttacker() != null ? event.getOriginalAttacker() : event.getAttacker();
+        if (attacker.getTags().contains("knockback")) {
+            attacker.removeTag("knockback");
+            event.setStrength(event.getStrength() * 2f);
+//            attacker.sendMessage(new TranslationTextComponent("skill.gokistats.roll.knockback"));
+        }
+    }
+
+    @SubscribeEvent
     public static void entityHurt(LivingHurtEvent event) {
         DamageSource source = event.getSource();
 
@@ -148,7 +156,7 @@ public class CommonHandler {
                     );
 
                     victim.addTag("knockback");
-                    player.sendMessage(new TranslationTextComponent("skill.gokistats.roll.message"), UUID.randomUUID());
+//                    player.sendMessage(new TranslationTextComponent("skill.gokistats.roll.message"));
 
                     return;
                 }
